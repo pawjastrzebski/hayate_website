@@ -1,0 +1,186 @@
+/*basic layout */
+
+html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}img,embed,iframe,object,video{height:auto;max-width:100%}audio{max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}a{text-decoration: none;}
+
+body {
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    max-width: 1310px;
+    font-family: ubuntu, Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-rows: 4fr 20fr 1fr;
+    grid-template-columns: 4fr 1fr;
+    grid-template-areas: "header header" "main aside" "footer footer";
+    height: 100vh;
+  }
+
+  .container header, main, aside, footer {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      grid-template-rows: 1fr 1fr 5fr 1fr;
+      grid-template-columns: 2fr 5fr 3fr;
+      grid-template-areas: "header header header" "main main main" "footer footer footer";
+    }
+  }
+  @media (max-width: 480px) {
+    .container {
+      display: block;
+    }
+  }
+  .container header {
+    grid-area: header;
+
+
+  }
+  .container main {
+    grid-area: main;
+ 
+    margin: 40px 30px 0 0;;
+  }
+  .container aside {
+ 
+    grid-area: aside;
+    margin: 40px 0 0 0;
+  }
+ 
+  .container footer {
+    grid-area: footer;
+
+  }
+
+
+  /* Projects related */
+
+  h2 {
+    flex-basis: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.025);
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-size: 1.3em;
+    font-weight: 100;
+    padding: 5px;
+    border-bottom: 1px solid #DDD;
+  }
+
+  .projectsContainer{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap
+  }
+
+  .project {
+    padding: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .info a {
+    color: rgb(167, 12, 12)
+  }
+
+  .info a:hover{
+    color: black;
+  }
+
+  /* flex related */
+
+  nav ul{
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  nav a{
+    text-align: center;
+    color: #444;
+    display: block;
+    padding: 10px;
+  }
+  
+  nav a:hover{
+    background-color: #CCC;
+  }
+
+  nav a:active{
+    background-color: #BBB;
+  }
+  
+ 
+  
+  a.discord{
+    background: url(/static/images/tw.png) no-repeat center;
+    background-size: 80%;
+      
+  }
+  
+  a.fb{
+    background: url(/static/images/fb.png) no-repeat center;
+    background-size: 80%;
+  }
+  
+  .social a{
+    text-indent: -10000px;
+    margin: 0 auto;
+  }
+  
+  .social{
+    max-width: 80px;
+    margin: 0 auto; /* do at end */
+  }
+  
+ 
+  
+  nav ul.social li{
+    flex: 1 1 0;
+  }
+  
+  nav ul.social{
+    flex: 1 1 0;
+    display: flex;
+  }
+  
+  @media screen and (min-width: 1330px){
+  
+  nav ul{
+    display: flex;
+  }
+  
+  nav li{
+    flex: 1 1 100%;
+  }
+      
+  nav{
+    min-width: 1310px;
+    display: flex;
+    justify-content: space-between;
+  }
+    
+  ul.social{
+    margin: 0;
+  }
+      
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+  header div {
+    flex: 1 1 0;
+  }

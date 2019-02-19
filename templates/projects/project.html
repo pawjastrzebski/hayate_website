@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="projectsContainer">
+         <h2>Projekty</h2>
+    {% for project in projects  %}
+        <section class="project">
+            <div class="cover">
+                <a href="{% url 'project' project.id  %}"> 
+                    <img src="/static/images/covers/{{project.short_name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}">
+                </a>
+            </div>
+            <div class="info">
+                <h3><a href="{% url 'project' project.id  %}">{{ project.long_name }}</a></h3>
+            </div>
+        </section>
+    {% endfor %}
+    </div>
+{% endblock content %}
+    
