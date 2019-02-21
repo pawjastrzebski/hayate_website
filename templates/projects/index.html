@@ -2,7 +2,7 @@
 {% block content %}
 
     <div class="projectsContainer">
-         <h2>Projekty</h2>
+         <h2>{{title}}</h2>
     {% for project in projects  %}
         <section class="project">
             <div class="cover">
@@ -11,7 +11,19 @@
                 </a>
             </div>
             <div class="info">
-                <h3><a href="{% url 'project' project.id  %}">{{ project.long_name }}</a></h3>
+                    <section class="projectInfo">
+                            <h3><a href="{% url 'project' project.id  %}">{{ project.name }}</a></h3>
+                            <div class="propertiesNames">
+                                <div>Gatunki</div>
+                            </div>{{project.oj}}
+                            <div class="properiesValues">
+                                <div>
+                                    {% for genre in project.genres.all  %}
+                                        <a href="{% url 'projectsForGenre' genre.id %}" >{{ genre.name | safe }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </section>                
             </div>
         </section>
     {% endfor %}

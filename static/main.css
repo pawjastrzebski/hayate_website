@@ -11,6 +11,7 @@ body {
     font-family: ubuntu, Verdana, Geneva, Tahoma, sans-serif;
   }
   
+  
   .container {
     display: grid;
     grid-template-rows: 4fr 20fr 1fr;
@@ -21,7 +22,7 @@ body {
 
   .container header, main, aside, footer {
     border: 1px solid #DDD;
-    border-radius: 3px;
+    border-radius: 5px;
     
   }
 
@@ -30,6 +31,17 @@ body {
       grid-template-rows: 1fr 1fr 5fr 1fr;
       grid-template-columns: 2fr 5fr 3fr;
       grid-template-areas: "header header header" "main main main" "footer footer footer";
+      header {
+        display: flex;
+        flex-direction: column;
+      }
+    
+    
+    
+      header div {
+        flex: 1 1 0;
+      }
+    
     }
   }
   @media (max-width: 480px) {
@@ -69,7 +81,7 @@ body {
     margin-block-end: 0;
     font-size: 1.3em;
     font-weight: 100;
-    padding: 5px;
+    padding: 15px 0 15px 0;
     border-bottom: 1px solid #DDD;
   }
 
@@ -174,13 +186,3 @@ body {
       
   }
 
-  header {
-    display: flex;
-    flex-direction: column;
-  }
-
-
-
-  header div {
-    flex: 1 1 0;
-  }
