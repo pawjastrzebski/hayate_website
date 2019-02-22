@@ -9,28 +9,39 @@ body {
     min-height: 100vh;
     max-width: 1310px;
     font-family: Avenir,lucida grande,tahoma,verdana,arial,sans-serif;
+    font-size: 14px;
+  }
+
+  a {
+    color: #444; 
+  }
+
+  a:hover{
+    color: rgb(117, 17, 17);
   }
   
   
   .container {
     display: grid;
     grid-template-rows: 4fr 20fr 1fr;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 5fr 2fr;
     grid-template-areas: "header header" "main aside" "footer footer";
     height: 100vh;
   }
 
-  .container header, main, aside, footer {
-    border: 1px solid #DDD;
+  .container header, main, aside, footer, nav {
+    border: 1px solid #BBB;
     border-radius: 5px;
     
   }
 
   @media (max-width: 1130px) {
     .container {
-      grid-template-rows: 1fr 1fr 5fr 1fr;
-      grid-template-columns: 2fr 5fr 3fr;
-      grid-template-areas: "header header header" "main main main" "footer footer footer";
+      grid-template-rows: 1fr 5fr 1fr;
+      grid-template-columns: 2fr;
+      grid-template-areas: "header" "main" "footer";
+    }
+      
       header {
         display: flex;
         flex-direction: column;
@@ -73,7 +84,7 @@ body {
   }
 
 
-  /* Projects related */
+  /* projects page */
 
   h2 {
     flex-basis: 100%;
@@ -99,18 +110,46 @@ body {
     width: 50%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
-  .info a {
-    color: rgb(167, 12, 12)
+  .project__cover {
+    min-width: 180px;
+   }
+
+  .project__info {
+    padding: 0 0 0 10px;
+
+    overflow: hidden;
+    
   }
 
-  .info a:hover{
-    color: black;
+  .title {
+    font-size: 1.5em;
+    color: rgb(77, 12, 12);
+    padding: 0 0 10px 0;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  /* flex related */
+  .info {
+    vertical-align: top;
+  }
+
+  .info__key {
+    vertical-align: baseline;
+  }
+
+  .info__value {
+
+  }
+
+
+
+
+  /* nawvigation */
 
   nav ul{
     list-style-type: none;
@@ -166,7 +205,7 @@ body {
     display: flex;
   }
   
-  @media screen and (min-width: 1330px){
+  @media screen and (min-width: 1000px){
   
   nav ul{
     display: flex;
@@ -177,9 +216,12 @@ body {
   }
       
   nav{
-    min-width: 1310px;
     display: flex;
     justify-content: space-between;
+    position: -webkit-sticky;
+    position: sticky;
+    margin: 0 0 30px 0;
+
   }
     
   ul.social{
@@ -191,7 +233,7 @@ body {
 /*news page*/
 
 .random {
-  margin: 0 10px 20px 10px;
+  margin: 0 0px 20px 0px;
 }
 
 .random__content {
@@ -233,4 +275,33 @@ body {
     .random {
       visibility: hidden
     }
+  }
+
+  /* latest */
+
+  .latest {
+    font-size: 13px;
+  }
+
+  .latest__item {
+    border-bottom: 1px solid #DDD;
+  }
+
+  .latest__project, .latest__chapter {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .latest__project {
+
+  }
+  
+  .latest__chapter {
+    margin-left: 10px;
+  }
+
+  .latest__chapter-number {
+    font-weight: bold;
+    font-size: 1.1em;
   }

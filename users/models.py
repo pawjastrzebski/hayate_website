@@ -4,7 +4,7 @@ from django.db import models
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
-    nickname = models.CharField(max_length=40)
+    name = models.CharField(max_length=40)
     password = models.CharField(max_length=32)
     email = models.CharField(max_length=255)
     joining_date = models.DateField()
@@ -14,7 +14,7 @@ class User(models.Model):
 
     class Meta:
         db_table = 'users'
-        unique_together = (('nickname', 'email'),)
+        unique_together = (('name', 'email'),)
 
     def __str__(self):
         return self.nickname

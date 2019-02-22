@@ -1,21 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader, RequestContext
-from .models import Project, Genre
+from .models import Project, Genre, Chapter
 
 
 
 def index(request):
     projects = Project.objects.order_by('short_name').prefetch_related('genres')
-    for project in projects.all():
-        url = '/images/covers/' + project.short_name + '/cover01_small.jpg'
-        setattr(project, 'cover_url', url)
-        print(vars(project));
-        print('\n')
-    for project in projects.all():
-        print(vars(project));
-        print('\n')
+    latests = Chapter.objects.all().order_by('-id')[:20].prefetch_related('project')
     context = {
+        'latests': latests,
         'projects': projects,
         'title': 'Projekty'
     }

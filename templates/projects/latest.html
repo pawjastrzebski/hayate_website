@@ -1,0 +1,10 @@
+
+{% for latest in latests  %}
+    <ul class="latest">
+        <li class="latest__item">
+            <p class="latest__project"><a href="{% url 'project' latest.project.id %}">{{ latest.project.name }}</a> <span class="latest__chapter-number">{{ latest.number }}</span></p>
+            <p class="latest__chapter"> {{ latest.title | default:"--" }}</p>
+        </li>
+    </ul>
+{% endfor %}
+    

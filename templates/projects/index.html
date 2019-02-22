@@ -2,30 +2,39 @@
 {% block content %}
 
     <div class="projectsContainer">
-         <h2>{{title}}</h2>
     {% for project in projects  %}
         <section class="project">
-            <div class="cover">
+            <div class="project__cover">
                 <a href="{% url 'project' project.id  %}">
                     {% load static %}
-                    <img src="static/images/covers/{{project.short_name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}">
+                    <img src="{% static '/images/covers/'|add:project.short_name|add:'/cover01_small.jpg' %}" alt="Okładka {{project.long_name}}">
                 </a>
             </div>
-            <div class="info">
-                    <section class="projectInfo">
-                            <h3><a href="{% url 'project' project.id  %}">{{ project.name }}</a></h3>
-                            <div class="propertiesNames">
-                                <div>Gatunki</div>
-                            </div>{{project.oj}}
-                            <div class="properiesValues">
-                                <div>
-                                    {% for genre in project.genres.all  %}
-                                        <a href="{% url 'projectsForGenre' genre.id %}" >{{ genre.name | safe }}</a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </section>                
-            </div>
+       
+                <section class="project__info">
+                    <h3 class="title"><a href="{% url 'project' project.id  %}">{{ project.name }}</a></h3>
+                    <table class="info">
+                        <tr>
+                            <td class="info__key">
+                                Gatunki:
+                            </td>
+                            <td class="info__value">
+                                {% for genre in project.genres.all  %}
+                                    <a href="{% url 'projectsForGenre' genre.id %}" class="genre">{{ genre.name | safe }}</a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="info__key">
+                                Autor: 
+                            </td>
+                            <td class="info__value">
+                                {{project.author}}
+                            </td>
+                        </tr>
+                    </table>
+                </section>                
+
         </section>
     {% endfor %}
     </div>
