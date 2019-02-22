@@ -6,8 +6,17 @@ from .models import Project, Genre
 
 
 def index(request):
+    projects = Project.objects.order_by('short_name').prefetch_related('genres')
+    for project in projects.all():
+        url = '/images/covers/' + project.short_name + '/cover01_small.jpg'
+        setattr(project, 'cover_url', url)
+        print(vars(project));
+        print('\n')
+    for project in projects.all():
+        print(vars(project));
+        print('\n')
     context = {
-        'projects': Project.objects.order_by('short_name').prefetch_related('genres'),
+        'projects': projects,
         'title': 'Projekty'
     }
     return render(request, 'projects/index.html', context)
@@ -25,6 +34,8 @@ def project(request, id):
 def projectsForGenre(request, id):
     current_genre = Genre.objects.get(pk=id)
     projects = current_genre.project_set.order_by('short_name').prefetch_related('genres')
+    for project in projects:
+        project.cover_url: '/images/covers/' + project.short_name + '/cover01_small.jpg'
     context = {
         'projects': projects,
         'title': current_genre.name 

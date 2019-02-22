@@ -16,6 +16,9 @@ class User(models.Model):
         db_table = 'users'
         unique_together = (('nickname', 'email'),)
 
+    def __str__(self):
+        return self.nickname
+
 
 class Session(models.Model):
     id = models.AutoField(primary_key=True)

@@ -6,8 +6,9 @@
     {% for project in projects  %}
         <section class="project">
             <div class="cover">
-                <a href="{% url 'project' project.id  %}"> 
-                    <img src="/static/images/covers/{{project.short_name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}">
+                <a href="{% url 'project' project.id  %}">
+                    {% load static %}
+                    <img src="static/images/covers/{{project.short_name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}">
                 </a>
             </div>
             <div class="info">

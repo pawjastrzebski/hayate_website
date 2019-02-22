@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
 class Genre(models.Model):
@@ -70,28 +71,7 @@ class Project(models.Model):
             return self.short_name
 
 
-class User(models.Model):
-    id = models.AutoField(primary_key=True)
-    nickname = models.CharField(max_length=40)
-    password = models.CharField(max_length=32)
-    email = models.CharField(max_length=255)
-    joining_date = models.DateField()
-    quiting_date = models.DateField()
-    avatar = models.CharField(max_length=255)
-    admin = models.IntegerField()
 
-    class Meta:
-        db_table = 'users'
-        unique_together = (('nickname', 'email'),)
-
-
-class Session(models.Model):
-    id = models.AutoField(primary_key=True)
-    hash = models.CharField(max_length=100)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'sessions'
 
 
 class Role(models.Model):
@@ -99,7 +79,7 @@ class Role(models.Model):
     description = models.TextField()
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'roles'
@@ -148,7 +128,7 @@ class Work(models.Model):
     date = models.DateField()
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'works'
