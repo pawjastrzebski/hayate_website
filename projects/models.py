@@ -22,23 +22,27 @@ class Job(models.Model):
     id = models.AutoField(primary_key=True)
     job_name = models.CharField(max_length=50)
     hide = models.IntegerField()
-    new_column = models.IntegerField()
 
     class Meta:
         db_table = 'jobs'
 
-
-class Menu(models.Model):
-    id = models.IntegerField(primary_key=True)
-    deep = models.IntegerField()
-    menu_url = models.CharField(max_length=100)
-    menu_name = models.CharField(max_length=150)
-    hide = models.IntegerField()
+class Person(models.Model):
+    BLOOD_TYPE = (
+        (0, "0"),
+        (1, "A"),
+        (2, "B"),
+        (3, "AB")
+    )   
+    name = models.CharField(unique=True, max_length=100)
+    name_kanji = models.CharField(unique=True, max_length=255, blank=True,null=True)
+    birthplace = models.CharField(max_length=50, blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
+    blood_type = models.CharField(max_length=2, blank=True, null=True, choices=BLOOD_TYPE)
+    description = models.TextField()
+    twitter = models.CharField(unique=True, blank=True, null=True, max_length=200)
 
     class Meta:
-        db_table = 'menu'
-        unique_together = (('id', 'deep'),)
-
+        db_table = 'people'
 
 class Project(models.Model):
     STATE_OF_PROJECT = (
@@ -56,9 +60,8 @@ class Project(models.Model):
     chapter_prefix = models.CharField(max_length=25)
     state = models.IntegerField(choices=STATE_OF_PROJECT)
     type = models.IntegerField()
-    age_limit = models.IntegerField()
-    author = models.SmallIntegerField()
-    artist = models.IntegerField(blank=True, null=True)
+    is_hentai = models.IntegerField()
+    authors = models.ManyToManyField(Person, through='Author')
     description = models.TextField()
     total_volumes = models.SmallIntegerField()
     state_japan = models.IntegerField()
@@ -70,8 +73,19 @@ class Project(models.Model):
     def __str__(self):
             return self.short_name
 
+class Author(models.Model):
+    TYPE_OF_WORK = (
+        (0, 'Author'),
+        (1, 'Artist'),
+        (2, 'Assistant')
+    )
+    person = models.ForeignKey('Person', on_delete=models.CASCADE)
+    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    description = models.TextField()
+    work = models.PositiveSmallIntegerField(choices=TYPE_OF_WORK)
 
-
+    class Meta:
+        db_table = 'authors'
 
 
 class Role(models.Model):
@@ -104,14 +118,13 @@ class Chapter(models.Model):
     prefix_title = models.CharField(max_length=20, blank=True, null=True)
     order_number = models.SmallIntegerField()
     volume = models.SmallIntegerField()
-    new = models.IntegerField()
+    active = models.IntegerField()
     state = models.IntegerField()
     date = models.IntegerField()
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'chapters'
-        unique_together = (('id', 'new'), ('project', 'number', 'prefix_title', 'volume'),)
 
 class ProjectGenre(models.Model):
     id = models.AutoField(primary_key=True)
@@ -133,36 +146,3 @@ class Work(models.Model):
     class Meta:
         db_table = 'works'
         unique_together = (('user', 'chapter', 'job'),)
-
-
-class Person(models.Model):
-    BLOOD_TYPE = (
-        (0, "0"),
-        (1, "A"),
-        (2, "B"),
-        (3, "AB")
-    )   
-    name = models.CharField(max_length=100)
-    birthplace = models.CharField(max_length=50, blank=True, null=True)
-    birthday = models.DateField()
-    blood_type = models.CharField(max_length=2, blank=True, null=True, choices=BLOOD_TYPE)
-    description = models.TextField()
-  #  project = models.ManyToManyField(Project, through='Author')
-
-    class Meta:
-        db_table = 'people'
-
-
-class Authors(models.Model):
-    TYPE_OF_WORK = (
-        (0, 'Author'),
-        (1, 'Artist'),
-        (2, 'Assistant')
-    )
-    person = models.ForeignKey('Person', on_delete=models.CASCADE)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    description = models.TextField()
-    work = models.PositiveSmallIntegerField(choices=TYPE_OF_WORK)
-
-    class Meta:
-        db_table = 'authors'
