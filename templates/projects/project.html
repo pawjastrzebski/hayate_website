@@ -1,42 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+<h2><img src="{% static '/images/banners/'|add:project.short_name|add:'.jpg' %}" alt="{{project.long_name}}"></h2>
+<section class="project__info">
+    <h3 class="title"><a href="{% url 'project' project.id  %}">{{ project.name }}</a></h3>
+    <table class="info">
+        <tr>
+            <td class="info__key">
+                Gatunki:
+            </td>
+            <td class="info__value">
+                {% for genre in project.genres.all %}
+                <a href="{% url 'projectsForGenre' genre.id %}" class="genre">{{ genre.name | safe }}</a>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td class="info__key">
+                Autor:
+            </td>
+            <td class="info__value">
+                {{project.author}}
+            </td>
+        </tr>
+    </table>
+</section>
+<div class="volumes">
+    <div class="volume__cover">
 
-    <div class="projectsContainer">
-        {% load static %}
-         <h2><img src="{% static '/images/banners/'|add:project.short_name|add:'.jpg' %}" alt="{{project.long_name}}"></h2>
-        <section class="project">
-            <div class="cover">
-                <a href="{% url 'projects' %}"> 
-                    <img src="{% static '/images/covers/'|add:project.short_name|add:'/cover01_small.jpg' %}" alt="Okładka {{project.long_name}}">
-                </a>
-            </div>
-            <div class="info">
-                <h3><a href="{% url 'project' project.id  %}">{{ project.name }}</a></h3>
-                <section class="projectInfo">
-                    <div class="propertiesNames">
-                        <div>Gatunki</div>
-                    </div>
-                    <div class="propertiesValues">
-                        <div>
-                            
-                            {% for genre in genres  %}
-                                <a href="{% url 'projectsForGenre' genre.id %}" >{{ genre.name | safe }}</a>
-                            {% endfor %}
-                                
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <div class="volumes">
-                <div class="volume__cover">
-                    
-                </div>
-                <div class="volume__chapters">
-
-                </div>
-
-            </div>
-        </section>
     </div>
+    <div class="volume__chapters">
+
+    </div>
+
+</div>
 {% endblock content %}
-    
