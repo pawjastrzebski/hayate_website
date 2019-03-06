@@ -1,7 +1,8 @@
+<h2>Ostatnie rozdziały</h2>
 {% for latest in latests  %}
     <ul class="latest">
         <li class="latest__item">
-            <p class="latest__project"><a href="{% url 'project' latest.project.id %}">{{ latest.project.name }}</a> <span class="latest__chapter-number">{{ latest.number }}</span></p>
+            <p class="latest__project"><i class="fas fa-book"></i> <a href="{{latest.project.get_absolute_url}}">{{ latest.project.title.name }}</a> <span class="latest__chapter-number">{{ latest.number }}</span></p>
             <p class="latest__chapter"> {{ latest.title | default:"--" }}</p>
         </li>
     </ul>

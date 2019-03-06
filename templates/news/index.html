@@ -9,20 +9,28 @@
             
             {% for project in projects  %}
                 <div class="random__container">
-                    <div class="random__title" alt="{{project.name}}">{{ project.name }}</div>
-                    <img class="random__img" src="static/images/covers/{{project.short_name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}" />
+                    <a href="{{ project.get_absolute_url }}">
+                        <img class="random__img" src="{{project.get_cover}}" alt="Okładka {{project.long_name}}" />
+                    </a>
                 </div>
             {% endfor %}
                 
             </div>
     </section>
 
-    <section class='news'>
-        {% for news in news  %}
-            <header>{{ news.title }}</header>
-            <main>{{ news.content | safe }}</main>
-            <footer>{{ news.user.name }} - {{ news.date }}</footer>
-        {% endfor %}
+    <section class="random">
+        <h2>Losowe projekty</h2>
+        <div class="random__content">
+            
+            {% for project in projects  %}
+                <div class="random__container">
+                    <div class="random__title" alt="{{project.name}}">{{ project.name }}</div>
+                    <img class="random__img" src="static/images/covers/{{project.name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}" />
+                </div>
+            {% endfor %}
+                
+            </div>
     </section>
+
 
 {% endblock content %}

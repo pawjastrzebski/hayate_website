@@ -1,37 +1,69 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<h2><img src="{% static '/images/banners/'|add:project.short_name|add:'.jpg' %}" alt="{{project.long_name}}"></h2>
-<section class="project__info">
-    <h3 class="title"><a href="{% url 'project' project.id  %}">{{ project.name }}</a></h3>
-    <table class="info">
+<h2><img src="{{project.banner.url}}" alt="{{project.long_name}}"></h2>
+<section class="single">
+    <h3 class="title"><a href="{{project.get_absolute_url}}">{{ project.title.name }}</a></h3>
+    <table class="single-info">
         <tr>
-            <td class="info__key">
-                Gatunki:
-            </td>
-            <td class="info__value">
-                {% for genre in project.genres.all %}
-                <a href="{% url 'projectsForGenre' genre.id %}" class="genre">{{ genre.name | safe }}</a>
+            <td class="single-info__key">Gatunki:</td>
+            <td class="single-info__value">
+                {% for genre in project.title.genres.all %}
+                <a href="{{ genre.get_absolute_url }}" class="genre">{{ genre.name | safe }}</a>
                 {% endfor %}
             </td>
         </tr>
         <tr>
-            <td class="info__key">
-                Autor:
-            </td>
-            <td class="info__value">
-                {{project.author}}
+            <td class="single-info__key">Autor:</td>
+            <td class="single-info__value">
+                {% for author in project.title.authors.all  %}
+                    <a href="{{ author.get_absolute_url }}" class="author">{{ author.name | safe }}</a>{% if not forloop.last %},{% endif %}
+                {% endfor %}
             </td>
         </tr>
+        <tr>
+            <td class="single-info__key">Ilość tomów:</td>
+            <td class="single-info__value">{{project.title.total_volumes}}</td>
+        </tr>
+        <tr>
+            <td class="single-info__key">Stan w japonii:</td>
+            <td class="single-info__value">{{project.title.get_state_japan_display}}</td>
+        </tr>
+        <tr>
+            <td class="single-info__key">Stan u nas:</td>
+            <td class="single-info__value">{{project.get_state_display | safe}}</td>
+        </tr>
+        {% for role in project.role_set.all %}
+        <tr>
+            <td class="single-info__key">{{ role.job.name }}:</td>
+            <td class="single-info__value">{{ role.user.name }}</td>
+        </tr>
+        {% endfor %}
     </table>
+    <div class="description">{{project.title.description | safe}}</div>
 </section>
-<div class="volumes">
-    <div class="volume__cover">
+<section class="volumes">
 
+    {% for volume in volumes %}
+    <div class="volume">
+        <div class="volume__cover">
+            {% load static from staticfiles %}
+            <img src="{{volume.cover.url}}">
+        </div>
+        <div class="volume__chapters">
+            <table class="chapters">
+                {%for chapter in volume.chapter_set.all%}
+                <tr>
+                    <td>
+                        <a href="#">Tom {{chapter.volume.number}} {{chapter.prefix_title}} {{chapter.number}}
+                            {{chapter.title}}</a>
+                    </td>
+                    <td class="chapter-date">{{chapter.date}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
     </div>
-    <div class="volume__chapters">
-
-    </div>
-
-</div>
+    {% endfor %}
+</section>
 {% endblock content %}

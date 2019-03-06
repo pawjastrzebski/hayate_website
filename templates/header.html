@@ -1,14 +1,23 @@
-<nav>
-        <ul class="navbar">
-                <li><a href="#">Newsy</a></li>
-                <li><a href="{%url 'projects'%}">Projekty</a></li>
-                <li><a href="#">Ekipa</a></li>
-                <li><a href="#">Rekrutacja</a></li>
-                <li><a href="#">Kontakt</a></li>
-        </ul>
+<div class="fixed-bar"><nav>
+    <ul >
+        <li><a href="{%url 'main_site' %}"><span class="fas fa-chalkboard-teacher fa-ht"></span>Newsy</a></li>
+        <li><a href="{%url 'main_site' %}"><span class="fas fa-list-alt fa-ht"></span>Forum</a></li>
+        <li><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Projekty</a>
+            <ul>
+                <li>
+                    <a href="{%url 'projects' %}">Aktywne</a>
+                </li>
+            </ul>
+        </li>
+        <li><a href="#"><span class="fas fa-id-card fa-ht"></span>Ekipa</a></li>
+        <li><a href="#"><span class="fas fa-pen fa-ht"></span>Rekrutacja</a></li>
+        <li><a href="#"><span class="fas fa-envelope fa-ht"></span>Kontakt</a></li>
+        <li><a href="#"><span class="fas fa-spider fa-ht"></span>Zgłoś błąd</a></li>
+    </ul>
 
-        <ul class="social">
-                <li><a href="" class="fb">Facebook</a></li>
-                <li><a href="" class="discord">Discord</a></li>
-        </ul>
+    <ul class="social">
+        <li><a href="" class="fb">Facebook</a></li>
+        <li><a href="" class="discord">Discord</a></li>
+    </ul>
 </nav>
+</div>
