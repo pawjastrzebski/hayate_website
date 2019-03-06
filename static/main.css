@@ -242,10 +242,16 @@ body {
     width: 50%;
   }
 
-  .project__cover {
-    min-width: 180px;
+  .cover {
     object-fit: cover;
-   }
+    width: 175px;
+    height: 250px;
+  }
+
+  .project__cover {
+    width: 175px;
+    height: 250px;
+  }
 
   .project__info {
     padding: 0 0 0 10px;
@@ -274,6 +280,7 @@ body {
 
   .info {
     vertical-align: top;
+    padding: 2px 0 0 5px;
   }
 
   .info__key {
@@ -298,7 +305,7 @@ body {
   }
 
   .info__value {
-
+    padding: 0 0 0 5px;
   }
 
 /*news page*/
@@ -323,7 +330,7 @@ body {
 
 .random__img {
   width: 175px;
-  height: 255px;
+  height: 250px;
   object-fit: cover;
 }
 .random__title {

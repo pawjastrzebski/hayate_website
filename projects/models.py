@@ -101,8 +101,7 @@ class Project(models.Model):
     state = models.IntegerField(choices=STATE_OF_PROJECT)
     text_state = models.TextField(blank=True, null=True)
     banner = models.ImageField(null=True, upload_to=get_upload_path)
-
-    
+            
     class Meta:
         db_table = 'projects'
     def __str__(self):

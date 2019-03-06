@@ -1,13 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader, RequestContext
+from django.db.models import Q, Count
 from .models import Project, Genre, Chapter, Volume, Title, Person
 
 
 
 def index(request):
-    projects = Project.objects.filter(title__is_hentai = 0, state__gte=1).order_by('name').prefetch_related('title__genres', 'title__authors')
-    latests = Chapter.objects.filter(project__title__is_hentai = 0).all().order_by('-id')[:20].prefetch_related('project')
+    projects = Project.objects.filter(title__is_hentai = 0, state__gte=1, chapter__state=1).order_by('name').prefetch_related('title__genres', 'title__authors').annotate(number_of_chapters=Count('chapter__id'))
+    latests = Chapter.objects.filter(project__title__is_hentai = 0).all().order_by('-id')[:20].select_related('project', 'project__title').only('title', 'number', 'project__slug', 'project__title__name')
     context = {
         'latests': latests,
         'projects': projects,

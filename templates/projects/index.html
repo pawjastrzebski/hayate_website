@@ -5,13 +5,13 @@
     {% for project in projects  %}
         <section class="project">
             <div class="project__cover">
-                <a href="{{project.title.get_absolute_url}}">
-                    <img src="{{project.title.project.get_cover}}" alt="Okładka {{project.title.name}}">
+                <a href="{{project.get_absolute_url}}">
+                    <img class="cover" src="{{project.title.project.get_cover}}" alt="Okładka {{project.title.name}}">
                 </a>
             </div>
        
                 <section class="project__info">
-                    <h3 class="title"><a href="{{project.title.project.get_absolute_url}}">{{ project.name }}</a></h3>
+                    <h3 class="title"><a href="{{project.get_absolute_url}}">{{ project.title.name }}</a></h3>
                     <table class="info">
                         <tr>
                             <td class="info__key">
@@ -32,6 +32,10 @@
                                     <a href="{{ author.get_absolute_url }}" class="author">{{ author.name | safe }}</a>{% if not forloop.last %},{% endif %}
                                 {% endfor %}                                
                             </td>
+                        </tr>
+                        <tr>
+                            <td class="info__key">Rozdziały: </td>
+                            <td class="info__value">{{project.number_of_chapters}}</td>
                         </tr>
                     </table>
                 </section>                
