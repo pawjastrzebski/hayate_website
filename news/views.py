@@ -9,7 +9,7 @@ def index(request):
     n = 4
     rand_ids = random.sample(ids, n)
     random_projects = Project.objects.filter(title_id__in=rand_ids).prefetch_related('title__genres')
-    latests = Chapter.objects.all().order_by('-id')[:20].prefetch_related('project')
+    latests = Chapter.objects.filter(project__title__is_hentai = 0, state = 1).all().order_by('-date')[:20].prefetch_related('project')
 
     context = {
         'latests': latests,

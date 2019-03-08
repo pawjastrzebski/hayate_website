@@ -46,7 +46,7 @@ class Person(models.Model):
     birthplace = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     blood_type = models.CharField(max_length=2, blank=True, null=True, choices=BLOOD_TYPES)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     twitter = models.CharField(blank=True, null=True, max_length=200)
 
     class Meta:
@@ -61,6 +61,12 @@ class Title(models.Model):
         (0, 'Powstaje'),
         (1, 'Zakończona')
     )
+    TYPES_LIST = (
+        (0, 'manga'),
+        (1, 'anime'),
+        (2, 'gra'),
+        (3, 'light novel')
+    )
     id = models.AutoField(primary_key=True)
     name = models.CharField(blank=True, null=True, max_length=255)
     slug = AutoSlugField(null=True, default=None, unique=True, populate_from='name')
@@ -68,13 +74,14 @@ class Title(models.Model):
     name_en = models.CharField(blank=True, null=True, max_length=255)
     name_kanji = models.CharField(blank=True, null=True, max_length=255)
     alternative_names = models.CharField(blank=True, null=True, max_length=255)
-    type = models.IntegerField()
+    type = models.IntegerField(choices=TYPES_LIST)
     is_hentai = models.IntegerField()
     authors = models.ManyToManyField(Person, through='Author')
     description = models.TextField()
     total_volumes = models.SmallIntegerField()
     state_japan = models.IntegerField(choices=STATES_JAPAN)
     genres = models.ManyToManyField(Genre, through="ProjectGenre")
+    relations = models.ManyToManyField('self', through="TitleRelate", symmetrical=False, related_name="relation")
 
     class Meta:
         db_table = 'titles'
@@ -86,7 +93,7 @@ class Title(models.Model):
 
 class Project(models.Model):
     def get_upload_path(instance, filename):
-        return f"images/banners/{instance.id}.jpg"
+        return f"images/banners/{instance.title.id}.jpg"
     STATE_OF_PROJECT = (
         (0, 'Ukryty'),
         (1, 'Aktywny'),
@@ -126,7 +133,7 @@ class Author(models.Model):
         db_table = 'authors'
 
     def __str__(self):
-        return self.project.name + ' - ' + self.person.name
+        return self.title.name + ' - ' + self.person.name
 
 
 class Role(models.Model):
@@ -189,3 +196,17 @@ class Work(models.Model):
     class Meta:
         db_table = 'works'
         unique_together = (('user', 'chapter', 'job'),)
+
+class TitleRelate(models.Model):
+    RELATION_TYPES = (
+        (0, 'Doujin'),
+        (1, "Sequel"),
+        (2, "Prequel"),
+        (3, "Historia poboczna")
+    )
+    title = models.ForeignKey('Title', on_delete=models.CASCADE, related_name='title')
+    title_related = models.ForeignKey('Title', on_delete=models.CASCADE, related_name='title_related')
+    relation_type = models.PositiveSmallIntegerField(choices=RELATION_TYPES)
+
+    class Meta:
+       db_table = 'title_relations' 
