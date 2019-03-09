@@ -2,10 +2,16 @@
     <ul >
         <li><a href="{%url 'main_site' %}"><span class="fas fa-chalkboard-teacher fa-ht"></span>Newsy</a></li>
         <li><a href="{%url 'main_site' %}"><span class="fas fa-list-alt fa-ht"></span>Forum</a></li>
-        <li><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Projekty</a>
+        <li><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Nasze projekty</a>
             <ul>
                 <li>
-                    <a href="{%url 'projects' %}">Aktywne</a>
+                    <a href="{%url 'projects_active' %}">Aktywne</a>
+                </li>
+                <li>
+                    <a href="{%url 'projects_completed' %}">Zakończone</a>
+                </li>
+                <li>
+                    <a href="{%url 'projects_abandoned' %}">Porzucone</a>
                 </li>
             </ul>
         </li>

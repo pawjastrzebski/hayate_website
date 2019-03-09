@@ -2,7 +2,34 @@ from django.db import models
 from users.models import User
 from autoslug import AutoSlugField
 from django.urls import reverse
+from django.db.models import Count
 
+
+class NonHentaiQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(state=1)
+    def completed(self):
+        return self.filter(state=2)
+    def abandoned(self):
+        return self.filter(state=3)
+    def licensed(self):
+        return self.filter(state=4)   
+class NonHentaiProjectsManager(models.Manager):
+    def get_queryset(self):
+        return NonHentaiQuerySet(self.model, using=self._db).filter(chapter__state=1, state__gte=1, title__is_hentai=0).order_by('name').prefetch_related('title__genres', 'title__authors').annotate(number_of_chapters=Count('chapter__id'))
+    def active(self):
+        return self.get_queryset().active()
+    def completed(self):
+        return self.get_queryset().completed()
+    def abandoned(self):
+        return self.get_queryset().abandoned()
+    def licensed(self):
+        return self.get_queryset().licensed()
+
+class SingleProjectManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related('title').prefetch_related('title__genres', 'title__authors')
+    
 
 class Genre(models.Model):
     GENRE_TYPES = (
@@ -21,9 +48,6 @@ class Genre(models.Model):
         db_table = 'genres'
     def get_absolute_url(self):
          return reverse('projects_for_genre', kwargs={'slug_name': self.slug})
-
-    
-
 
 class Job(models.Model):
     id = models.AutoField(primary_key=True)
@@ -90,7 +114,6 @@ class Title(models.Model):
     def get_absolute_url(self):
         return reverse('project', kwargs={'slug_name': self.slug})
 
-
 class Project(models.Model):
     def get_upload_path(instance, filename):
         return f"images/banners/{instance.title.id}.jpg"
@@ -108,6 +131,9 @@ class Project(models.Model):
     state = models.IntegerField(choices=STATE_OF_PROJECT)
     text_state = models.TextField(blank=True, null=True)
     banner = models.ImageField(null=True, upload_to=get_upload_path)
+    objects = models.Manager()
+    no_hentai = NonHentaiProjectsManager()
+    single_project = SingleProjectManager()
             
     class Meta:
         db_table = 'projects'

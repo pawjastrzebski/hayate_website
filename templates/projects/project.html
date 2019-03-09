@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
 <h2><img src="{{project.banner.url}}" alt="{{project.long_name}}"></h2>
 <section class="single">
     <h3 class="title"><a href="{{project.get_absolute_url}}">{{ project.title.name }}</a></h3>
@@ -42,12 +41,13 @@
     </table>
     <div class="description">{{project.title.description | safe}}</div>
 </section>
-<section class="volumes">
+
+{% if project.state < 4 %}
+ <section class="volumes">
 
     {% for volume in volumes %}
     <div class="volume">
         <div class="volume__cover">
-            {% load static from staticfiles %}
             <img src="{{volume.cover.url}}">
         </div>
         <div class="volume__chapters">
@@ -64,4 +64,5 @@
     </div>
     {% endfor %}
 </section>
+{% endif %}
 {% endblock content %}
