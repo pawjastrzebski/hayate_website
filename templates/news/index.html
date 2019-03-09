@@ -18,14 +18,17 @@
             </div>
     </section>
 
-    <section class="random">
-        <h2>Losowe projekty</h2>
-        <div class="random__content">
+    <section class="in-need">
+        <h2>Projekty potrzebujące wsparcia</h2>
+        <div class="in-need__list">
             
-            {% for project in projects  %}
-                <div class="random__container">
-                    <div class="random__title" alt="{{project.name}}">{{ project.name }}</div>
-                    <img class="random__img" src="static/images/covers/{{project.name}}/cover01_small.jpg" alt="Okładka {{project.long_name}}" />
+            {% for project in projects_in_need  %}
+                <div class="in-need__container">
+                    <img class="in-need__img" src="{{project.project.get_cover}}" alt="Okładka {{project.project.title.name}}" />
+                </div>
+                <div class="in-need__description">
+                    <h3 class="in-need__job">Poszukiwany/a: {{project.job.name}}</h3>
+                    {{project.description}}
                 </div>
             {% endfor %}
                 

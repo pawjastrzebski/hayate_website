@@ -54,7 +54,7 @@
             <table class="chapters">
                 {%for chapter in volume.chapter_set.all%}
                 <tr>
-                    <td><a href="#">Tom {{chapter.volume.number}} {{chapter.prefix_title}} {{chapter.number}}</a></td>
+                    <td class=""><a href="#">Tom {{chapter.volume.number}} {{chapter.prefix_title}} {{chapter.number}}</a></td>
                     <td class="chapter-title"><a href="#">{{chapter.title}}</a></td>
                     <td class="chapter-date">{{chapter.date}}</td>
                 </tr>

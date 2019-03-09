@@ -236,3 +236,12 @@ class TitleRelate(models.Model):
 
     class Meta:
        db_table = 'title_relations' 
+
+class ProjectsInNeed(models.Model):
+    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    job = models.ForeignKey('Job', on_delete=models.CASCADE)
+    description = models.TextField()
+    active = models.BooleanField(default=False)
+
+    class Meta:
+       db_table = 'projects-in-need' 

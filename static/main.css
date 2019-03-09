@@ -198,7 +198,7 @@ a:hover {
 }
 
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .fixed-bar {
     padding: 0;
     position: fixed;
@@ -458,6 +458,48 @@ h2 {
   }
 }
 
+.in-need {
+  margin: 0 0px 20px 0px;
+}
+
+.in-need__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-basis: 100%;
+  padding: 10px 0 10px 0;
+  margin: 5px auto;
+}
+
+.in-need__container {
+  
+}
+
+.in-need__img {
+  min-width: 175px;
+  height: 250px;
+  object-fit: cover;
+  margin: 0 5px;
+}
+
+.in-need__description {
+  font-size: 1.1em;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding: 5px;
+}
+
+.in-need__job {
+  font-size: 1.5em;
+}
+
+@media screen and (max-width: 900px) {
+  .in-need__list {
+    display: block;
+  }
+}
+
 /* latest */
 
 .latest {
@@ -541,14 +583,14 @@ h2 {
   padding: 3px 6px;
 }
 
-.chapter-title {
+.chapter-title  {
   width: 550px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.chapter-title:hover {
+.chapter-title:hover  {
   overflow: visible;
 }
 
