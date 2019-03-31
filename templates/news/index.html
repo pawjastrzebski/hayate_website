@@ -3,8 +3,10 @@
 
 {% block content %}
 
-    <section class="random">
-        <h2>Losowe projekty</h2>
+    <div class="news">To jest News Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita iusto repudiandae quam esse nisi iste laudantium! Velit et aliquam sit quos cupiditate, quasi veniam quas quo ad repellendus! Cum, libero.</div>
+
+    <section class="main-section random">
+        <h2 class="headline">Losowe projekty</h2>
         <div class="random__content">
             
             {% for project in projects  %}
@@ -12,14 +14,15 @@
                     <a href="{{ project.get_absolute_url }}">
                         <img class="random__img" src="{{project.get_cover}}" alt="Okładka {{project.long_name}}" />
                     </a>
+                    <div class="random__title inverse"> <a href="{{ project.get_absolute_url }}">{{project.title.name}}</a></div>
                 </div>
             {% endfor %}
                 
             </div>
     </section>
 
-    <section class="in-need">
-        <h2>Projekty potrzebujące wsparcia</h2>
+    <section class="main-section in-need">
+        <h2 class="headline">Projekty potrzebujące wsparcia</h2>
         <div class="in-need__list">
             
             {% for project in projects_in_need  %}
@@ -27,7 +30,8 @@
                     <img class="in-need__img" src="{{project.project.get_cover}}" alt="Okładka {{project.project.title.name}}" />
                 </div>
                 <div class="in-need__description">
-                    <h3 class="in-need__job">Poszukiwany/a: {{project.job.name}}</h3>
+                    <h3 class="in-need__title primary-text-color inverse"><a href="{{ project.get_absolute_url }}">{{project.project.title.name}}</a></h3>
+                    <h4 class="in-need__job">{{project.job_text}}</h4>
                     {{project.description}}
                 </div>
             {% endfor %}

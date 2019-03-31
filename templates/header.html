@@ -1,29 +1,30 @@
-<div class="fixed-bar"><nav>
-    <ul >
-        <li><a href="{%url 'main_site' %}"><span class="fas fa-chalkboard-teacher fa-ht"></span>Newsy</a></li>
-        <li><a href="{%url 'main_site' %}"><span class="fas fa-list-alt fa-ht"></span>Forum</a></li>
-        <li><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Nasze projekty</a>
-            <ul>
-                <li>
-                    <a href="{%url 'projects_active' %}">Aktywne</a>
-                </li>
-                <li>
-                    <a href="{%url 'projects_completed' %}">Zakończone</a>
-                </li>
-                <li>
-                    <a href="{%url 'projects_abandoned' %}">Porzucone</a>
-                </li>
-            </ul>
-        </li>
-        <li><a href="#"><span class="fas fa-id-card fa-ht"></span>Ekipa</a></li>
-        <li><a href="#"><span class="fas fa-pen fa-ht"></span>Rekrutacja</a></li>
-        <li><a href="#"><span class="fas fa-envelope fa-ht"></span>Kontakt</a></li>
-        <li><a href="#"><span class="fas fa-spider fa-ht"></span>Zgłoś błąd</a></li>
-    </ul>
+<div class="fixed-bar">
+    <nav>
+        {% load static %}
+        <a href="{%url 'main_site' %}"><img class="logo" src={% static '/img/logo.png' %} alt="Główna Strona"></a>
+        <ul class ="menu">
+            <li><a href="http://forum.hayate.eu/"><span class="fas fa-list-alt fa-ht"></span>Forum</a></li>
+            <li class="dropdown"><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Projekty <span class="fa fa-caret-down"></span></a>
+                <ul>
+                    <li>
+                        <a href="{%url 'projects_active' %}">Aktywne</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'projects_completed' %}">Zakończone</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'projects_abandoned' %}">Porzucone</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#"><span class="fas fa-id-card fa-ht"></span>Ekipa</a></li>
+            <li><a href="http://forum.hayate.eu/viewforum.php?f=102"><span class="fas fa-pen fa-ht"></span>Rekrutacja</a></li>
+            <li><a href="#"><span class="fas fa-envelope fa-ht"></span>Kontakt</a></li>
+            <li><a href="http://forum.hayate.eu/viewtopic.php?f=67&t=10086"><span class="fas fa-spider fa-ht"></span>Zgłoś błąd</a></li>
+        </ul>
 
-    <ul class="social">
-        <li><a href="" class="fb">Facebook</a></li>
-        <li><a href="" class="discord">Discord</a></li>
-    </ul>
-</nav>
+        <ul class="social">
+            <li><a href="https://hayate.eu/discord" class="fb"><span class="fab fa-2x fa-discord fa-ht"></span></a></li>
+        </ul>
+    </nav>
 </div>

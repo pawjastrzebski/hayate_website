@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+    <h2 class="headline">{{ title }}</h2>
     <div class="projectsContainer">
     {% for project in projects  %}
         <section class="project">
@@ -36,6 +36,10 @@
                         <tr>
                             <td class="info__key">Rozdziały: </td>
                             <td class="info__value">{{project.number_of_chapters}}</td>
+                        </tr>
+                        <tr>
+                            <td class="info__key">Stan u nas: </td>
+                            <td class="info__value">{{project.get_state_display | safe}}</td>
                         </tr>
                     </table>
                 </section>                

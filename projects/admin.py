@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import  Chapter, Project, Genre, ProjectGenre, Author, Person, Job, Role, Volume, Work, TitleRelate, ProjectsInNeed
+from .models import  Chapter, Project, Genre, ProjectGenre, Author, Person, Job, Role, Volume, Work, TitleRelate, ProjectsInNeed, Title
 
 # Register your models here.
 admin.site.register(Chapter)
@@ -15,3 +15,4 @@ admin.site.register(Volume)
 admin.site.register(Work)
 admin.site.register(TitleRelate)
 admin.site.register(ProjectsInNeed)
+admin.site.register(Title)

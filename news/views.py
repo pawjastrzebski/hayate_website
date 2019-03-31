@@ -4,13 +4,13 @@ from projects.models import Project, Chapter, Volume, ProjectsInNeed
 from .models import News
 
 def index(request):
-    ids = Project.objects.filter(title__is_hentai=0).values_list('title_id', flat=True)
+    ids = Project.no_hentai.values_list('title_id', flat=True)
     ids = list(ids)
     n = 4
     rand_ids = random.sample(ids, n)
     random_projects = Project.objects.filter(title_id__in=rand_ids).prefetch_related('title__genres')
-    latests = Chapter.objects.filter(project__title__is_hentai = 0, active = 1).all().order_by('-date')[:20].select_related('project', 'project__title').only('title', 'number', 'project__slug', 'project__title__name')
-    projects_in_need = ProjectsInNeed.objects.select_related('project');
+    latests = Chapter.objects.filter(project__title__is_hentai = 0, state = 1).all().order_by('-date', '-order_number')[:15].select_related('project', 'project__title').only('title', 'number', 'project__slug', 'project__title__name')
+    projects_in_need = ProjectsInNeed.objects.select_related('project')[:2];
 
     context = {
         'latests': latests,

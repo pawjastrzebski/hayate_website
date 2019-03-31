@@ -48,6 +48,9 @@ class Genre(models.Model):
         db_table = 'genres'
     def get_absolute_url(self):
          return reverse('projects_for_genre', kwargs={'slug_name': self.slug})
+    def __str__(self):
+        return self.name
+    
 
 class Job(models.Model):
     id = models.AutoField(primary_key=True)
@@ -56,6 +59,8 @@ class Job(models.Model):
 
     class Meta:
         db_table = 'jobs'
+    def __str__(self):
+        return self.name
 
 class Person(models.Model):
     BLOOD_TYPES = (
@@ -171,11 +176,13 @@ class Role(models.Model):
 
     class Meta:
         db_table = 'roles'
+    def __str__(self):
+        return self.job.name + '-' + self.project.name + '-' + self.user.name
 
 
 class Volume(models.Model):
     def get_upload_path(instance, filename):
-        return f"images/covers/{instance.project.id}/{instance.order_number}.jpg"
+        return f"images/covers/{instance.project.title.id}/{instance.order_number}.jpg"
 
     id = models.AutoField(primary_key=True)
     order_number = models.IntegerField()
@@ -185,6 +192,8 @@ class Volume(models.Model):
     cover = models.ImageField(null=True, upload_to=get_upload_path)
     class Meta:
         db_table = 'volumes'
+    def __str__(self):
+        return self.project.name + "-" + str(self.order_number)
 
 class Chapter(models.Model):
     id = models.AutoField(primary_key=True)
@@ -196,10 +205,13 @@ class Chapter(models.Model):
     volume = models.ForeignKey('Volume', on_delete=models.CASCADE)
     active = models.IntegerField()
     state = models.IntegerField()
-    date = models.IntegerField()
+    date = models.DateField()
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
     class Meta:
         db_table = 'chapters'
+    def __str__(self):
+        return self.volume.project.name + "-" + str(self.volume.number) + '-' + str(self.order_number)
+    
 
 class ProjectGenre(models.Model):
     id = models.AutoField(primary_key=True)
@@ -209,6 +221,8 @@ class ProjectGenre(models.Model):
     class Meta:
         db_table = 'project_genre'
         unique_together = (('genre', 'project'),)
+    def __str__(self):
+        return self.project.name + "-" + self.genre.name
 
 
 class Work(models.Model):
@@ -222,6 +236,8 @@ class Work(models.Model):
     class Meta:
         db_table = 'works'
         unique_together = (('user', 'chapter', 'job'),)
+    def __str__(self):
+        return self.chapter.name + "-" + self.job.name + '-' + self.user.name
 
 class TitleRelate(models.Model):
     RELATION_TYPES = (
@@ -235,13 +251,18 @@ class TitleRelate(models.Model):
     relation_type = models.PositiveSmallIntegerField(choices=RELATION_TYPES)
 
     class Meta:
-       db_table = 'title_relations' 
+       db_table = 'title_relations'
+    def __str__(self):
+        return self.title.name + "-" + self.title_related.name + '-' + self.relation_type
 
 class ProjectsInNeed(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
+    job_text = models.TextField()
     description = models.TextField()
     active = models.BooleanField(default=False)
 
     class Meta:
-       db_table = 'projects-in-need' 
+       db_table = 'projects-in-need'
+    def __str__(self):
+        return self.project.name

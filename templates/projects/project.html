@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2><img src="{{project.banner.url}}" alt="{{project.long_name}}"></h2>
+<h2><img src="{{project.banner.url}}" alt=""></h2>
 <section class="single">
-    <h3 class="title"><a href="{{project.get_absolute_url}}">{{ project.title.name }}</a></h3>
+    <h3 class="title primary-text-color">{{ project.title.name }}</h3>
     <table class="single-info">
         <tr>
             <td class="single-info__key">Gatunki:</td>
@@ -54,7 +54,7 @@
             <table class="chapters">
                 {%for chapter in volume.chapter_set.all%}
                 <tr>
-                    <td class=""><a href="#">Tom {{chapter.volume.number}} {{chapter.prefix_title}} {{chapter.number}}</a></td>
+                    <td class=""><a href="#">Tom {{chapter.volume.number}} {{chapter.prefix_title}} {% if chapter.number != 0 %}{{chapter.number}}{% endif %}</a></td>
                     <td class="chapter-title"><a href="#">{{chapter.title}}</a></td>
                     <td class="chapter-date">{{chapter.date}}</td>
                 </tr>
