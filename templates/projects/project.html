@@ -51,11 +51,12 @@
             <img src="{{volume.cover.url}}">
         </div>
         <div class="volume__chapters">
+            <span class="volume__title"> {% if volume.number > 0 %}Tom {{volume.number}} {% else %} {{volume.specific_name}} {% endif %}</span>
             <table class="chapters">
                 {%for chapter in volume.chapter_set.all%}
                 <tr>
-                    <td class=""><a href="#">Tom {{chapter.volume.number}} {{chapter.prefix_title}} {% if chapter.number != 0 %}{{chapter.number}}{% endif %}</a></td>
-                    <td class="chapter-title"><a href="#">{{chapter.title}}</a></td>
+                    <td class=""><a href="http://reader.hayate.eu/{{chapter.project.slug}}/{{chapter.volume.order_number}}/{{chapter.order_number}}/view">{{chapter.prefix_title}} {% if chapter.number != 0 %}{{chapter.number}}{% endif %}</a></td>
+                    <td class="chapter-title"><a href="http://reader.hayate.eu/{{chapter.project.slug}}/{{chapter.volume.order_number}}/{{chapter.order_number}}/view">{{chapter.title}}</a></td>
                     <td class="chapter-date">{{chapter.date}}</td>
                 </tr>
                 {%endfor%}

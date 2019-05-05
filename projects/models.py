@@ -3,7 +3,8 @@ from users.models import User
 from autoslug import AutoSlugField
 from django.urls import reverse
 from django.db.models import Count
-
+from django.core.exceptions import ObjectDoesNotExist
+import json
 
 class NonHentaiQuerySet(models.QuerySet):
     def active(self):
@@ -16,7 +17,7 @@ class NonHentaiQuerySet(models.QuerySet):
         return self.filter(state=4)   
 class NonHentaiProjectsManager(models.Manager):
     def get_queryset(self):
-        return NonHentaiQuerySet(self.model, using=self._db).filter(chapter__state=1, state__gte=1, title__is_hentai=0).order_by('name').prefetch_related('title__genres', 'title__authors').annotate(number_of_chapters=Count('chapter__id'))
+        return NonHentaiQuerySet(self.model, using=self._db).filter(chapter__state=1, state__gte=1, state__lte=3, title__is_hentai=0).order_by('name').prefetch_related('title__genres', 'title__authors').annotate(number_of_chapters=Count('chapter__id'))
     def active(self):
         return self.get_queryset().active()
     def completed(self):
@@ -56,11 +57,13 @@ class Job(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     hide = models.IntegerField()
+    next_job = models.ForeignKey('self', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'jobs'
     def __str__(self):
         return self.name
+
 
 class Person(models.Model):
     BLOOD_TYPES = (
@@ -88,7 +91,8 @@ class Person(models.Model):
 class Title(models.Model):
     STATES_JAPAN = (
         (0, 'Powstaje'),
-        (1, 'Zakończona')
+        (1, 'Zakończona'),
+        (2, "Wsztrymana")
     )
     TYPES_LIST = (
         (0, 'manga'),
@@ -127,7 +131,8 @@ class Project(models.Model):
         (1, 'Aktywny'),
         (2, 'Zakończony'),
         (3, 'Porzuczony'),
-        (4, 'Zlicencjonowany') 
+        (4, 'Zlicencjonowany'),
+        (5, 'Wstrzymany')
     )
     title = models.OneToOneField(Title, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(max_length=255)
@@ -193,7 +198,7 @@ class Volume(models.Model):
     class Meta:
         db_table = 'volumes'
     def __str__(self):
-        return self.project.name + "-" + str(self.order_number)
+        return self.project.slug + " " + str(self.order_number)
 
 class Chapter(models.Model):
     id = models.AutoField(primary_key=True)
@@ -210,7 +215,22 @@ class Chapter(models.Model):
     class Meta:
         db_table = 'chapters'
     def __str__(self):
-        return self.volume.project.name + "-" + str(self.volume.number) + '-' + str(self.order_number)
+        print(vars(self))
+        return self.project.name + "-" + str(self.number)
+    def save(self, *args, **kwargs):
+        data = {
+                "title": self.project.name,
+                "volume_name": '',
+                "chapter_volume": self.volume.number,
+                "chapter_prefix": self.prefix_title,
+                "chapter_number": self.number,
+                "chapter_title": self.title,
+                "url": f"http://reader.hayate.eu/{self.project.slug}/{self.volume.order_number}/{self.order_number}/view",
+                "baner": "http://strona.hayate.eu/media/images/banners/{self.project.id}.jpg"
+        }
+        with open('../../../../../hayate/matsuri/data/chapter.json', 'w') as outfile:
+            json.dump(data, outfile, ensure_ascii=False)
+        super().save() 
     
 
 class ProjectGenre(models.Model):
@@ -227,17 +247,42 @@ class ProjectGenre(models.Model):
 
 class Work(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateField()
+    date = models.DateField(null=True, blank=True)
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    prev_work = models.ForeignKey('self', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, blank=True)
+    prev_work = models.ForeignKey('self', on_delete=models.CASCADE, editable=False, null=True, blank=True)
 
     class Meta:
         db_table = 'works'
         unique_together = (('user', 'chapter', 'job'),)
     def __str__(self):
-        return self.chapter.name + "-" + self.job.name + '-' + self.user.name
+        return self.chapter.project.slug + "-" + str(self.chapter.number) + "-" + self.job.name
+    def save(self, *args, **kwargs):
+        if (self.prev_work == None):
+            if (self.job.id == 1 or self.job.id == 6):
+                self.prev_work = ""
+                # if (self.chapter.volume.order_number == 1 and self.chapter.order_number == 1):
+                #     self.prev_work = "";
+                # elif (self.chapter.order_number == 1):
+                #     last_chapter_of_prev_volume = Chapter.object.filter().get()
+                #     self.prev_work = Work.objects.get(chapter = last_chapter_of_prev_volume, job=)
+            else:
+                try:
+                    job = Job.objects.get(next_job = self.job.id) 
+                    self.prev_work = Work.objects.get(chapter = self.chapter, job = job)
+                except ObjectDoesNotExist:
+                    pass
+        super().save()
+
+        if(self.job.next_job.id > 1 and self.date is not None):
+            prev_work = Work(chapter=self.chapter, job=self.job, prev_work=self)
+            prev_work.save()
+
+
+
+
+ 
 
 class TitleRelate(models.Model):
     RELATION_TYPES = (

@@ -17,7 +17,7 @@ class User(models.Model):
         unique_together = (('name', 'email'),)
 
     def __str__(self):
-        return self.nickname
+        return self.name
 
 
 class Session(models.Model):

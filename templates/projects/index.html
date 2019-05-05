@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2 class="headline">{{ title }}</h2>
+    <h2 class="headline">{{ title | safe }}</h2>
     <div class="projectsContainer">
     {% for project in projects  %}
         <section class="project">
             <div class="project__cover">
                 <a href="{{project.get_absolute_url}}">
-                    <img class="cover" src="{{project.title.project.get_cover}}" alt="Okładka {{project.title.name}}">
+                    <img class="cover" src="{{project.get_cover}}" alt="Okładka {{project.title.name}}">
                 </a>
+                <div class="cover__title inverse"> <a href="{{ project.get_absolute_url }}">{{project.title.name}}</a></div>
             </div>
        
                 <section class="project__info">
@@ -19,7 +20,7 @@
                             </td>
                             <td class="info__value">
                                 {% for genre in project.title.genres.all  %}
-                                    <a href="{{ genre.get_absolute_url }}" class="genre">{{ genre.name | safe }}</a>
+                                    <a href="{{ genre.get_absolute_url }}" class="genre">{{ genre.name | safe }}</a>{% if not forloop.last %},{% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
@@ -38,7 +39,7 @@
                             <td class="info__value">{{project.number_of_chapters}}</td>
                         </tr>
                         <tr>
-                            <td class="info__key">Stan u nas: </td>
+                            <td class="info__key">Stan: </td>
                             <td class="info__value">{{project.get_state_display | safe}}</td>
                         </tr>
                     </table>

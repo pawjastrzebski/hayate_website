@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="news">To jest News Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita iusto repudiandae quam esse nisi iste laudantium! Velit et aliquam sit quos cupiditate, quasi veniam quas quo ad repellendus! Cum, libero.</div>
+    <div class="news inverse"><a href="https://forum.hayate.eu/viewtopic.php?f=65&t=10095">Wróciliśmy! - 4 kwietnia 2019</a></div>
 
     <section class="main-section random">
         <h2 class="headline">Losowe projekty</h2>
@@ -12,7 +12,7 @@
             {% for project in projects  %}
                 <div class="random__container">
                     <a href="{{ project.get_absolute_url }}">
-                        <img class="random__img" src="{{project.get_cover}}" alt="Okładka {{project.long_name}}" />
+                        <img class="random__img" src="{{project.get_cover}}" alt="" />
                     </a>
                     <div class="random__title inverse"> <a href="{{ project.get_absolute_url }}">{{project.title.name}}</a></div>
                 </div>
@@ -27,12 +27,15 @@
             
             {% for project in projects_in_need  %}
                 <div class="in-need__container">
-                    <img class="in-need__img" src="{{project.project.get_cover}}" alt="Okładka {{project.project.title.name}}" />
+                    <a href="{{ project.project.get_absolute_url }}">
+                        <img class="in-need__img" src="{{project.project.get_cover}}" alt="" />
+                    </a>
                 </div>
                 <div class="in-need__description">
-                    <h3 class="in-need__title primary-text-color inverse"><a href="{{ project.get_absolute_url }}">{{project.project.title.name}}</a></h3>
+                    <h3 class="in-need__title primary-text-color inverse"><a href="{{ project.project.get_absolute_url }}">{{project.project.title.name}}</a></h3>
                     <h4 class="in-need__job">{{project.job_text}}</h4>
                     {{project.description}}
+                    <a href="https://forum.hayate.eu/viewtopic.php?f=102&t=10087"><p>Dołącz już dziś!</p></a>
                 </div>
             {% endfor %}
                 

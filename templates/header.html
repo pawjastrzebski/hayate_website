@@ -1,10 +1,10 @@
 <div class="fixed-bar">
     <nav>
         {% load static %}
-        <a href="{%url 'main_site' %}"><img class="logo" src={% static '/img/logo.png' %} alt="Główna Strona"></a>
+        <a href="{%url 'main_site' %}"><div class="logo" alt="Główna Strona"></div></a>
         <ul class ="menu">
-            <li><a href="http://forum.hayate.eu/"><span class="fas fa-list-alt fa-ht"></span>Forum</a></li>
-            <li class="dropdown"><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Projekty <span class="fa fa-caret-down"></span></a>
+            <li><a href="http://forum.hayate.eu/"><span class="fas fa-list-alt fa-ht"></span>Fokowisko</a></li>
+            <li class="dropdown"><a href="{%url 'projects' %}"><span class="fas fa-folder-open fa-ht"></span>Projekty <span class="fa fa-caret-down narrow-device"></span></a>
                 <ul>
                     <li>
                         <a href="{%url 'projects_active' %}">Aktywne</a>
@@ -17,13 +17,13 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#"><span class="fas fa-id-card fa-ht"></span>Ekipa</a></li>
-            <li><a href="http://forum.hayate.eu/viewforum.php?f=102"><span class="fas fa-pen fa-ht"></span>Rekrutacja</a></li>
-            <li><a href="#"><span class="fas fa-envelope fa-ht"></span>Kontakt</a></li>
-            <li><a href="http://forum.hayate.eu/viewtopic.php?f=67&t=10086"><span class="fas fa-spider fa-ht"></span>Zgłoś błąd</a></li>
+            <li><a href="#"><span class="fas fa-id-card fa-ht"></span>Foczki</a></li>
+            <li class="narrow-device"><a href="https://forum.hayate.eu/viewtopic.php?f=102&t=10087"><span class="fas fa-pen fa-ht"></span>Zostań foczką</a></li>
+            <li class="narrow-device"><a href="#"><span class="fas fa-envelope fa-ht"></span>Kontakt</a></li>
+            <li class="narrow-device"><a href="http://forum.hayate.eu/viewtopic.php?f=67&t=10086"><span class="fas fa-spider fa-ht"></span>Zgłoś błąd</a></li>
         </ul>
 
-        <ul class="social">
+        <ul class="social narrow-device">
             <li><a href="https://hayate.eu/discord" class="fb"><span class="fab fa-2x fa-discord fa-ht"></span></a></li>
         </ul>
     </nav>

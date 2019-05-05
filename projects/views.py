@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader, RequestContext
 from django.db.models import Q, Count, Prefetch
-from .models import Project, Genre, Chapter, Volume, Title, Person
+from .models import Project, Genre, Chapter, Volume, Title, Person, Author
 
 
 
@@ -13,7 +13,7 @@ def index(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Wszystkie projekty'
+        'title': 'Wszystkie projekty -'
     }
     return render(request, 'projects/index.html', context)
 
@@ -23,7 +23,7 @@ def projects_active(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty aktywne'
+        'title': 'Projekty aktywne -'
     }
     return render(request, 'projects/index.html', context)
 
@@ -33,7 +33,7 @@ def projects_completed(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty zakończone'
+        'title': 'Projekty zakończone -'
     }
     return render(request, 'projects/index.html', context)
 
@@ -43,7 +43,7 @@ def projects_abandoned(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty porzucone'
+        'title': 'Projekty porzucone -'
     }
     return render(request, 'projects/index.html', context)
 
@@ -53,7 +53,7 @@ def projects_licensed(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty zlicencjonowane'
+        'title': 'Projekty zlicencjonowane -'
     }
     return render(request, 'projects/index.html', context)
 
@@ -85,7 +85,7 @@ def projects_for_genre(request, slug_name):
 
 def projects_for_person(request, slug_name):
     projects = Project.no_hentai.filter(title__authors__slug = slug_name).all()
-    author_name = Author.objects.get(slug = slug_name).name
+    author_name = Person.objects.get(slug = slug_name).name
     latests = Chapter.objects.filter(project__title__is_hentai = 0, state = 1).all().order_by('-date', '-order_number')[:15].select_related('project', 'project__title').only('title', 'number', 'project__slug', 'project__title__name')
 
     context = {
