@@ -201,6 +201,10 @@ class Volume(models.Model):
         return self.project.slug + " " + str(self.order_number)
 
 class Chapter(models.Model):
+    SEND_INFO_TO_BOT = (
+        (0, 'Nie wysyłaj'),
+        (1, 'Wyślij')
+    )
     id = models.AutoField(primary_key=True)
     filename = models.CharField(max_length=255, blank=True, null=True)
     title = models.TextField()
@@ -208,7 +212,7 @@ class Chapter(models.Model):
     prefix_title = models.CharField(max_length=20, blank=True, null=True)
     order_number = models.SmallIntegerField()
     volume = models.ForeignKey('Volume', on_delete=models.CASCADE)
-    active = models.IntegerField()
+    active = models.IntegerField(choices=SEND_INFO_TO_BOT)
     state = models.IntegerField()
     date = models.DateField()
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
@@ -218,18 +222,19 @@ class Chapter(models.Model):
         print(vars(self))
         return self.project.name + "-" + str(self.number)
     def save(self, *args, **kwargs):
-        data = {
-                "title": self.project.name,
-                "volume_name": '',
-                "chapter_volume": self.volume.number,
-                "chapter_prefix": self.prefix_title,
-                "chapter_number": self.number,
-                "chapter_title": self.title,
-                "url": f"http://reader.hayate.eu/{self.project.slug}/{self.volume.order_number}/{self.order_number}/view",
-                "baner": "http://strona.hayate.eu/media/images/banners/{self.project.id}.jpg"
-        }
-        with open('../../../../../hayate/matsuri/data/chapter.json', 'w') as outfile:
-            json.dump(data, outfile, ensure_ascii=False)
+        if(self.active == 1 ):
+            data = {
+                    "title": self.project.title.name,
+                    "volume_name": '',
+                    "chapter_volume": self.volume.number,
+                    "chapter_prefix": self.prefix_title,
+                    "chapter_number": self.number,
+                    "chapter_title": self.title,
+                    "url": f"http://reader.hayate.eu/{self.project.slug}/{self.volume.order_number}/{self.order_number}/view",
+                    "baner": f"http://strona.hayate.eu/media/images/banners/{self.project.title.id}.jpg"
+            }
+            with open('../hayate/matsuri/data/chapter.json', 'w', encoding="utf-8") as outfile:
+                json.dump(data, outfile, ensure_ascii=False)
         super().save() 
     
 
