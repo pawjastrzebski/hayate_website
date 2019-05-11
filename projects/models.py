@@ -203,13 +203,14 @@ class Volume(models.Model):
 class Chapter(models.Model):
     SEND_INFO_TO_BOT = (
         (0, 'Nie wysyłaj'),
-        (1, 'Wyślij')
+        (1, 'Wyślij na discord'),
+        (2, "Inne")
     )
     id = models.AutoField(primary_key=True)
     filename = models.CharField(max_length=255, blank=True, null=True)
     title = models.TextField()
     number = models.CharField(max_length=10, blank=True, null=True)
-    prefix_title = models.CharField(max_length=20, blank=True, null=True)
+    prefix_title = models.CharField(max_length=20, blank=True)
     order_number = models.SmallIntegerField()
     volume = models.ForeignKey('Volume', on_delete=models.CASCADE)
     active = models.IntegerField(choices=SEND_INFO_TO_BOT)
