@@ -20,12 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = '7m^n@3@x$n541m8d6awuw4j29-fk@(&e&_2xck(cs=%d7s!6x4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['.hayate.eu']
 
 
 # Application definition
@@ -37,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     'news.apps.NewsConfig'
@@ -51,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'hayate.urls'
@@ -81,9 +79,9 @@ WSGI_APPLICATION = 'hayate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Hayate',
-        'USER': 'root',
-        'PASSWORD': 'mysql',
+        'NAME': 'hayate_web',
+        'USER': 'hayate_web',
+        'PASSWORD': 'qwedcxzaq',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -124,7 +122,6 @@ USE_TZ = True
 DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
 DATE_FORMAT = 'd-m-Y'
-
 
 
 # Static files (CSS, JavaScript, Images)

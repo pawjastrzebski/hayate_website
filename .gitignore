@@ -1,6 +1,8 @@
 .vscode/settings.json
-static/images/
-hayate/settings.py
+.static/images/
+.hayate/settings.py
+migrations.*
+**/migrations
 # Django #
 *.log
 *.pot

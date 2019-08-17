@@ -4,7 +4,7 @@
 
         <li class="latest__item">
             <p class="latest__project"><i class="fas fa-book"></i> <a href="{{latest.project.get_absolute_url}}">{{ latest.project.title.name | safe }}</a> {% if latest.number != 0 %}<span class="latest__chapter-number">{{ latest.number }}</span>{%endif%}</p>
-            <p class="latest__chapter"> {{ latest.title | default:"--" | safe }}</p>
+            <p class="latest__chapter"><a href="http://reader.hayate.eu/{{latest.project.slug}}/{{latest.volume.order_number}}/{{latest.order_number}}/view"/>{{ latest.title | default:"--" | safe }}</a></p>
         </li>
 
 {% endfor %}

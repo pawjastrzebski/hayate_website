@@ -1,4 +1,4 @@
-from django.db import models
+xfrom django.db import models
 from users.models import User
 from autoslug import AutoSlugField
 from django.urls import reverse
@@ -130,7 +130,7 @@ class Project(models.Model):
         (0, 'Ukryty'),
         (1, 'Aktywny'),
         (2, 'Zakończony'),
-        (3, 'Porzuczony'),
+        (3, 'Porzucony'),
         (4, 'Zlicencjonowany'),
         (5, 'Wstrzymany')
     )
@@ -208,9 +208,9 @@ class Chapter(models.Model):
     )
     id = models.AutoField(primary_key=True)
     filename = models.CharField(max_length=255, blank=True, null=True)
-    title = models.TextField()
+    title = models.TextField(blank=True, null=False)
     number = models.CharField(max_length=10, blank=True, null=True)
-    prefix_title = models.CharField(max_length=20, blank=True)
+    prefix_title = models.CharField(max_length=20, blank=True, default='')
     order_number = models.SmallIntegerField()
     volume = models.ForeignKey('Volume', on_delete=models.CASCADE)
     active = models.IntegerField(choices=SEND_INFO_TO_BOT)
@@ -234,7 +234,7 @@ class Chapter(models.Model):
                     "url": f"http://reader.hayate.eu/{self.project.slug}/{self.volume.order_number}/{self.order_number}/view",
                     "baner": f"http://strona.hayate.eu/media/images/banners/{self.project.title.id}.jpg"
             }
-            with open('../hayate/matsuri/data/chapter.json', 'w', encoding="utf-8") as outfile:
+            with open('../../../matsuri/data/chapter.json', 'w', encoding="utf-8") as outfile:
                 json.dump(data, outfile, ensure_ascii=False)
         super().save() 
     
