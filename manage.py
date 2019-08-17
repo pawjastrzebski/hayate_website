@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
 
 if __name__ == '__main__':
+    sys.path.append('../lib')
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hayate.settings')
     try:
         from django.core.management import execute_from_command_line
