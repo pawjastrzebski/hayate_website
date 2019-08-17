@@ -130,7 +130,7 @@ class Project(models.Model):
         (0, 'Ukryty'),
         (1, 'Aktywny'),
         (2, 'Zakończony'),
-        (3, 'Porzuczony'),
+        (3, 'Porzucony'),
         (4, 'Zlicencjonowany'),
         (5, 'Wstrzymany')
     )
