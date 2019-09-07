@@ -1,3 +1,5 @@
+
+.vscode/settings.json
 .static/images/
 .hayate/settings.py
 migrations.*
