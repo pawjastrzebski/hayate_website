@@ -22,8 +22,9 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('projects/', include('projects.urls')),
     path('', include('news.urls')),
+    path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
-    path('discord/', RedirectView.as_view(url="http://discord.gg/Rcec4y"))
+    path('discord/', RedirectView.as_view(url="http://discord.gg/Rcec4yD"))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 class="headline">{{ title | safe }}</h2>
+    <div class="">
+        <table class="members">
+            <tr class="members__header">
+                <th>Nick</th>
+                <th>Data dołączenia</th>
+            </tr>
+            {% for member in members  %}
+            <tr class="members__single-member">
+                <td>{{member.name | safe}}</td>
+                <td class="single-member__joining-date">{{member.joining_date}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <h2 class="headline">Byli z nami</h2>
+        <div>
+        {% for member in retired_members  %}
+            {{ member.name | safe}}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        </div>
+{% endblock content %}
+    

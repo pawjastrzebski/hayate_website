@@ -11,6 +11,8 @@ class User(models.Model):
     quiting_date = models.DateField()
     avatar = models.CharField(max_length=255)
     admin = models.IntegerField()
+    active = models.IntegerField()
+    discord = models.CharField(max_length=60)
 
     class Meta:
         db_table = 'users'

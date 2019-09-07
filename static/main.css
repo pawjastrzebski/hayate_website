@@ -330,7 +330,7 @@ nav ul li {
 
 
   .logo {
-  display: block;
+  display: inline-block;
   vertical-align: middle;
   background: center url('img/logo.png') no-repeat;
   width: 107px;
@@ -583,6 +583,16 @@ h2 {
   font-size: 1.1em;
 }
 
+/* members page */
+
+.members {
+  margin: auto; 
+}
+
+.single-member__joining-date {
+  text-align: right;
+}
+
 /* project page */
 
 @media(max-width: 1050px) {
@@ -738,3 +748,4 @@ nav {
 }
 
 }
+
