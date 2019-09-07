@@ -208,7 +208,7 @@ class Chapter(models.Model):
     )
     id = models.AutoField(primary_key=True)
     filename = models.CharField(max_length=255, blank=True, null=True)
-    title = models.TextField(blank=True, null=False)
+    title = models.CharField(max_length=255, blank=True, null=False)
     number = models.CharField(max_length=10, blank=True, null=True)
     prefix_title = models.CharField(max_length=20, blank=True, default='')
     order_number = models.SmallIntegerField()

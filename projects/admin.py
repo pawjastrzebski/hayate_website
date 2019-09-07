@@ -3,6 +3,18 @@ from django.contrib import admin
 from .models import  Chapter, Project, Genre, ProjectGenre, Author, Person, Job, Role, Volume, Work, TitleRelate, ProjectsInNeed, Title
 from users.models import User
 
+class ChapterInline(admin.TabularInline):
+    '''Stacked Inline View for Chapter'''
+    model = Chapter
+    min_num = 1
+    max_num = 20
+
+class VolumeInline(admin.TabularInline):
+    '''Stacked Inline View for Volume'''
+    model = Volume
+    min_num = 1
+    max_num = 20
+
 class GenreAdmin(admin.ModelAdmin):
     def titles_counter(self, obj):
         return obj.title_set.count()  
@@ -33,6 +45,7 @@ class TitleAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class ProjectAdmin(admin.ModelAdmin):
+    inlines = [VolumeInline]
     list_display = ('name', 'chapter_prefix', 'state', 'text_state')
     list_display_link = ('name')
     list_editable = ('state', 'text_state')
@@ -52,6 +65,7 @@ class RoleAdmin(admin.ModelAdmin):
     search_fields = ('project', 'job', 'user')
 
 class VolumeAdmin(admin.ModelAdmin):
+    inlines = [ChapterInline]
     list_display = ('project', 'order_number', 'number', 'specific_name')
     list_editable = ('order_number', 'number', 'specific_name')
     search_fields = ['project']
