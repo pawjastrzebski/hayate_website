@@ -198,7 +198,7 @@ class Volume(models.Model):
     class Meta:
         db_table = 'volumes'
     def __str__(self):
-        return self.project.slug + " " + str(self.order_number)
+        return str(self.number)
 
 class Chapter(models.Model):
     SEND_INFO_TO_BOT = (
@@ -263,7 +263,7 @@ class Work(models.Model):
         unique_together = (('user', 'chapter', 'job'),)
     def __str__(self):
         works_list = Work.objects.all().prefetch_related('chapters', 'users', 'jobs')
-        return self.chapter.project.slug + "-" + str(self.chapter.number) + "-" + self.job.name
+        return self.job.name
     def save(self, *args, **kwargs):
         if (self.prev_work == None):
             if (self.job.id == 1 or self.job.id == 6):
