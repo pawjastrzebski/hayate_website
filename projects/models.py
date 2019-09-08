@@ -251,7 +251,6 @@ class ProjectGenre(models.Model):
 
 
 class Work(models.Model):
-    print('In model')
     id = models.AutoField(primary_key=True)
     date = models.DateField(null=True, blank=True)
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
