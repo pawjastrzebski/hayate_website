@@ -20,7 +20,7 @@ class GenreAdmin(admin.ModelAdmin):
         return obj.title_set.count()  
     list_display = ('name', 'genre_type', 'titles_counter')
     list_display_links = None
-    list_editable = ('name', 'genre_type')
+    #list_editable = ('name', 'genre_type')
     list_filter = ['genre_type']
     search_fields = ['name']
 
@@ -29,18 +29,18 @@ class JobAdmin(admin.ModelAdmin):
         return obj.title_set.count()  
     list_display = ('name', 'next_job', 'hide')
     list_display_links = None
-    list_editable = ('name', 'next_job', 'hide')
+    #list_editable = ('name', 'next_job', 'hide')
 
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('name', 'name_kanji', 'birthplace', 'birthday', 'blood_type', 'twitter')
     list_display_link = ('name')
-    list_editable = ('name_kanji', 'birthplace', 'birthday', 'blood_type', 'twitter')
+    #list_editable = ('name_kanji', 'birthplace', 'birthday', 'blood_type', 'twitter')
     search_fields = ['name']
 
 class TitleAdmin(admin.ModelAdmin):
     list_display = ('name', 'name_kanji', 'type', 'is_hentai', 'total_volumes', 'state_japan')
     list_display_link = ('name')
-    list_editable = ('name_kanji', 'type', 'is_hentai', 'total_volumes', 'state_japan')
+    #list_editable = ('name_kanji', 'type', 'is_hentai', 'total_volumes', 'state_japan')
     list_filter = ('state_japan', 'is_hentai', 'type')
     search_fields = ['name']
 
@@ -48,7 +48,7 @@ class ProjectAdmin(admin.ModelAdmin):
     inlines = [VolumeInline]
     list_display = ('name', 'chapter_prefix', 'state', 'text_state')
     list_display_link = ('name')
-    list_editable = ('state', 'text_state')
+    #list_editable = ('state', 'text_state')
     list_filter = ['state']
     list_select_related = ['title']
     search_fields = ['name']
@@ -56,26 +56,24 @@ class ProjectAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('person', 'title', 'description', 'work')
     list_display_link = ('person')
-    list_editable = ('description', 'work')
+    #list_editable = ('description', 'work')
     search_fields = ('person', 'title')
 
 class RoleAdmin(admin.ModelAdmin):
     list_display = ('project', 'job', 'user', 'description')
-    list_editable = ['description']
+    #list_editable = ['description']
     list_filter = ['job']
     search_fields = ('project', 'job', 'user')
 
 class VolumeAdmin(admin.ModelAdmin):
     inlines = [ChapterInline]
     list_display = ('project', 'order_number', 'number', 'specific_name')
-    list_editable = ('order_number', 'number', 'specific_name')
     search_fields = ['project']
 
 class ChapterAdmin(admin.ModelAdmin):
     save_on_top = True;
     list_display = ('project', 'number', 'title', 'order_number', 'prefix_title', 'volume', 'active', 'state')
     list_display_links = ['number']
-    list_editable = ('title', 'order_number', 'prefix_title', 'active', 'state')
     list_filter = ['state']
     list_select_related = ('project', 'project__title', 'volume')
     search_fields = ['number', 'project__name']
@@ -91,20 +89,21 @@ class WorkAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super(WorkAdmin, self).get_queryset(request).select_related(
                 'chapter', 'chapter__project', 'chapter__project__title', 'job', 'user').only(
-                    'chapter__number', 'chapter__project__title__name', 'job__name', 'user__name')
-    list_display = ('chapter', 'job', 'user')
+                    'chapter__number', 'chapter__project__title__name', 'job__name', 'user__name', 'date')
+    list_display = ('chapter', 'job', 'user', 'date')
+    #list_editable = ['date']
     autocomplete_fields = ['chapter']
-    fields = ('chapter', 'job', 'user')
+    fields = ('chapter', 'job', 'user', 'date')
     
 
 class TitleRelateAdmin(admin.ModelAdmin):
     list_display = ('title', 'title_related', 'relation_type')
-    list_editable = ['relation_type']
+    #list_editable = ['relation_type']
     list_filter = ['relation_type']
 
 class ProjectsInNeedAdmin(admin.ModelAdmin):
     list_display = ('project', 'job', 'job_text', 'description', 'active')
-    list_editable = ('job_text', 'description', 'active')
+    #list_editable = ('job_text', 'description', 'active')
 
 # Register your models here.
 admin.site.register(Chapter, ChapterAdmin)

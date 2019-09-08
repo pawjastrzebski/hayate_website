@@ -265,6 +265,7 @@ class Work(models.Model):
     def __str__(self):
         return f"{self.job.name}"
     def save(self, *args, **kwargs):
+        #self.date = date.today
         if (self.prev_work == None):
             if (self.job.id == 1 or self.job.id == 4 or self.job.id == 6 ):
                 self.prev_work = None
