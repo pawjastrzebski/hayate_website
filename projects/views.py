@@ -13,7 +13,7 @@ def index(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Wszystkie projekty -'
+        'title': 'Wszystkie projekty'
     }
     return render(request, 'projects/index.html', context)
 
@@ -23,7 +23,7 @@ def projects_active(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty aktywne -'
+        'title': 'Projekty aktywne'
     }
     return render(request, 'projects/index.html', context)
 
@@ -33,7 +33,7 @@ def projects_completed(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty zakończone -'
+        'title': 'Projekty zakończone'
     }
     return render(request, 'projects/index.html', context)
 
@@ -43,7 +43,7 @@ def projects_abandoned(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty porzucone -'
+        'title': 'Projekty porzucone'
     }
     return render(request, 'projects/index.html', context)
 
@@ -53,7 +53,7 @@ def projects_licensed(request):
     context = {
         'latests': latests,
         'projects': projects,
-        'title': 'Projekty zlicencjonowane -'
+        'title': 'Projekty zlicencjonowane'
     }
     return render(request, 'projects/index.html', context)
 

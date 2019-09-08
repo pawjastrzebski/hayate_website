@@ -21,7 +21,13 @@
     <link rel="icon" type="image/png" sizes="16x16" href={% static 'img/favicon-16x16.png' %}>
     <link rel="manifest" href="/site.webmanifest">
     <title>
-        {{ title }} Hayate - skanlacje po polsku       
+
+        {% if title %}
+            {{ title }} - Hayate - skanlacje po polsku
+        {% else %}
+            Hayate - skanlacje po polsku  
+        {% endif %}
+                  
     </title>
 </head>
 <body>
