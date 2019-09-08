@@ -252,7 +252,7 @@ class ProjectGenre(models.Model):
 
 class Work(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateField(null=True, blank=True)
+    date = models.DateField(null=True, blank=True, auto_now_add=True)
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, blank=True)
@@ -262,12 +262,11 @@ class Work(models.Model):
         db_table = 'works'
         unique_together = (('user', 'chapter', 'job'),)
     def __str__(self):
-
-        return self.job.name
+        return f"{self.job.name}"
     def save(self, *args, **kwargs):
         if (self.prev_work == None):
-            if (self.job.id == 1 or self.job.id == 6):
-                self.prev_work = ""
+            if (self.job.id == 1 or self.job.id == 4 or self.job.id == 6 ):
+                self.prev_work = None
                 # if (self.chapter.volume.order_number == 1 and self.chapter.order_number == 1):
                 #     self.prev_work = "";
                 # elif (self.chapter.order_number == 1):
@@ -277,13 +276,14 @@ class Work(models.Model):
                 try:
                     job = Job.objects.get(next_job = self.job.id) 
                     self.prev_work = Work.objects.get(chapter = self.chapter, job = job)
+
                 except ObjectDoesNotExist:
                     pass
         super().save()
 
         if(self.job.next_job.id > 1 and self.date is not None):
-            prev_work = Work(chapter=self.chapter, job=self.job, prev_work=self)
-            prev_work.save()
+            next_work = Work(chapter=self.chapter, job=self.job.next_job, prev_work=self, date=NULL)
+            next_work.save()
 
 
 
