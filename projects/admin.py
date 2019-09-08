@@ -89,8 +89,7 @@ class ProjectGenreAdmin(admin.ModelAdmin):
 class WorkAdmin(admin.ModelAdmin):
     model = Work
     def get_queryset(self, request):
-        return super(WorkAdmin, self).get_queryset(request).filter(
-            chapter__state = 0).select_related(
+        return super(WorkAdmin, self).get_queryset(request).select_related(
                 'chapter', 'chapter__project', 'chapter__project__title', 'job', 'user').only(
                     'chapter__number', 'chapter__project__title__name', 'job__name', 'user__name')
     list_display = ('chapter', 'job', 'user')

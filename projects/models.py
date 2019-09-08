@@ -4,6 +4,7 @@ from autoslug import AutoSlugField
 from django.urls import reverse
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import date
 import json
 
 class NonHentaiQuerySet(models.QuerySet):
@@ -252,7 +253,7 @@ class ProjectGenre(models.Model):
 
 class Work(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateField(null=True, blank=True, auto_now_add=True)
+    date = models.DateField(null=True, blank=True, default=date.today)
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
     job = models.ForeignKey('Job', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, blank=True)
@@ -282,7 +283,7 @@ class Work(models.Model):
         super().save()
 
         if(self.job.next_job.id > 1 and self.date is not None):
-            next_work = Work(chapter=self.chapter, job=self.job.next_job, prev_work=self, date=NULL)
+            next_work = Work(chapter=self.chapter, job=self.job.next_job, prev_work=self, date=None)
             next_work.save()
 
 
