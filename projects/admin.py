@@ -50,6 +50,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display_link = ('name')
     list_editable = ('state', 'text_state')
     list_filter = ['state']
+    list_select_related = ['title']
     search_fields = ['name']
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -71,18 +72,13 @@ class VolumeAdmin(admin.ModelAdmin):
     search_fields = ['project']
 
 class ChapterAdmin(admin.ModelAdmin):
+    save_on_top = True;
     list_display = ('project', 'number', 'title', 'order_number', 'prefix_title', 'volume', 'active', 'state')
-    list_display_link = ['number']
+    list_display_links = ['number']
     list_editable = ('title', 'order_number', 'prefix_title', 'active', 'state')
     list_filter = ['state']
-    search_fields = ['project']
-
-class RolekAdmin(admin.ModelAdmin):
-    list_display = ('project', 'number', 'title', 'order_number', 'prefix_title', 'volume', 'active', 'state')
-    list_display_link = ['number']
-    list_editable = ('title', 'number', 'order_number', 'prefix_title', 'active', 'state')
-    list_filter = ['state']
-    search_fields = ['project']
+    list_select_related = ('project', 'project__title', 'volume')
+    search_fields = ['number', 'project__name']
 
 class ProjectGenreAdmin(admin.ModelAdmin):
     list_display = ('project', 'genre')
@@ -91,7 +87,16 @@ class ProjectGenreAdmin(admin.ModelAdmin):
     search_fields = ['project', 'genre']
 
 class WorkAdmin(admin.ModelAdmin):
-    list_display = ('chapter', 'job', 'user', 'prev_work')
+    model = Work
+    def get_queryset(self, request):
+        return super(WorkAdmin, self).get_queryset(request).filter(
+            chapter__state = 0).select_related(
+                'chapter', 'chapter__project', 'chapter__project__title', 'job', 'user').only(
+                    'chapter__number', 'chapter__project__title__name', 'job__name', 'user__name')
+    list_display = ('chapter', 'job', 'user')
+    autocomplete_fields = ['chapter']
+    fields = ('chapter', 'job', 'user')
+    
 
 class TitleRelateAdmin(admin.ModelAdmin):
     list_display = ('title', 'title_related', 'relation_type')

@@ -220,7 +220,7 @@ class Chapter(models.Model):
     class Meta:
         db_table = 'chapters'
     def __str__(self):
-        return self.project.name + "-" + str(self.number)
+        return self.project.title.name + " " + str(self.number)
     def save(self, *args, **kwargs):
         if(self.active == 1 ):
             data = {
@@ -251,6 +251,7 @@ class ProjectGenre(models.Model):
 
 
 class Work(models.Model):
+    print('In model')
     id = models.AutoField(primary_key=True)
     date = models.DateField(null=True, blank=True)
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
@@ -262,7 +263,7 @@ class Work(models.Model):
         db_table = 'works'
         unique_together = (('user', 'chapter', 'job'),)
     def __str__(self):
-        works_list = Work.objects.all().prefetch_related('chapters', 'users', 'jobs')
+
         return self.job.name
     def save(self, *args, **kwargs):
         if (self.prev_work == None):
