@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader, RequestContext
@@ -94,3 +96,24 @@ def projects_for_person(request, slug_name):
         'latests': latests
     }
     return render(request, 'projects/index.html', context)
+
+def download_chapter(request, chapter_id):
+    data = [chapter_id, request.META.REMOTE_ADDR, request.META.HTTP_REFFERER]
+    with open(os.path.join(settings.BASE_DIR, 'projects/log.txt'), 'a') as log_file:
+        log_file.write('\n')
+        log_file.write(', '.join(data))
+
+    chapter_file = os.path.join(settings.FILES_DIR, chapter_relative_path)
+    chapter_relative_path = Chapter.objects.filter(id=chapter_id).first().filename
+    if chapter_relative_path[0] == '/':
+        chapter_relative_path = chapter_relative_path[1:]
+    chapter_filename = os.path.basename(chapter_relative_path)
+    path = os.path.join(settings.FILES_DIR, chapter_relative_path)
+    chapter_file = open(path, 'rb')
+    response = HttpResponse(content=chapter_file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = f'attachment; filename="{chapter_filename}"'
+    return response
+
+
+

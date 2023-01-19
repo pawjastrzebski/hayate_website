@@ -55,7 +55,7 @@
             <table class="chapters">
                 {%for chapter in volume.chapter_set.all%}
                 <tr>
-                    <td class=""><a href="http://reader.hayate.eu/{{chapter.project.slug}}/{{chapter.volume.order_number}}/{{chapter.order_number}}/view">{{chapter.prefix_title}} {% if chapter.number != 0 %}{{chapter.number}}{% endif %}</a></td>
+                    <td class=""><a href="http://reader.hayate.eu/{{chapter.project.slug}}/{{chapter.volume.order_number}}/{{chapter.order_number}}/view">{{chapter.prefix_title}} {% if chapter.number != 0 %}{{chapter.number}}{% endif %}</a><a href="/projects/download/{{chapter.id}}">DL<a/></td>
                     <td class="chapter-title"><a href="http://reader.hayate.eu/{{chapter.project.slug}}/{{chapter.volume.order_number}}/{{chapter.order_number}}/view">{{chapter.title}}</a></td>
                     <td class="chapter-date">{{chapter.date}}</td>
                 </tr>

@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FILES_DIR = os.path.abspath(os.path.join(BASE_DIR, '../data/info'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,7 +25,7 @@ SECRET_KEY = '7m^n@3@x$n541m8d6awuw4j29-fk@(&e&_2xck(cs=%d7s!6x4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', '.hayate.eu']
+ALLOWED_HOSTS = ['127.0.0.1', '.hayate.eu', 'localhost']
 
 
 # Application definition
@@ -82,7 +83,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hayate',
         'USER': 'root',
-        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '3306',
     }

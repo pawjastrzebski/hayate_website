@@ -11,5 +11,5 @@ urlpatterns = [
     path('<slug:slug_name>/', views.project, name='project'),
     path('genre/<slug:slug_name>/', views.projects_for_genre, name='projects_for_genre'),
     path('person/<slug:slug_name>/', views.projects_for_person, name='projects_for_person'),
-
+    path('download/<int:chapter_id>', views.download_chapter, name='download_chapter')
 ]
